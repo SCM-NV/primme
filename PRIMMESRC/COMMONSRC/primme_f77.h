@@ -92,7 +92,8 @@ C-------------------------------------------------------
      : PRIMMEF77_stats_numPreconds,
      : PRIMMEF77_stats_elapsedTime,
      : PRIMMEF77_dynamicMethodSwitch,
-     : PRIMMEF77_massMatrixMatvec
+     : PRIMMEF77_massMatrixMatvec,
+     : PRIMMEF77_diagonalize
 
       parameter(
      : PRIMMEF77_n = 0,
@@ -145,7 +146,8 @@ C-------------------------------------------------------
      : PRIMMEF77_stats_numPreconds = 47,
      : PRIMMEF77_stats_elapsedTime = 48,
      : PRIMMEF77_dynamicMethodSwitch = 49,
-     : PRIMMEF77_massMatrixMatvec = 50
+     : PRIMMEF77_massMatrixMatvec = 50,
+     : PRIMMEF77_diagonalize = 51
      : )
 
 C-------------------------------------------------------

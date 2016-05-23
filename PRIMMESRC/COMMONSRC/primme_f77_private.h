@@ -103,6 +103,7 @@
 #define PRIMMEF77_stats_elapsedTime  48
 #define PRIMMEF77_dynamicMethodSwitch 49
 #define PRIMMEF77_massMatrixMatvec  50
+#define PRIMMEF77_diagonalize  51
 
 /*----------------------------------------------------------*/
 /*     Defining easy to remember labels for setting the     */
@@ -134,6 +135,7 @@ union f77_value {
    void (*matFunc_v) (void *,void *,int *,struct primme_params *);
    void *ptr_v;
    void (*globalSumDoubleFunc_v) (void *,void *,int *,struct primme_params *);
+   void (*diagonalize_v) (void *,void *,int *,struct primme_params *);
    primme_target *target_v;
    double *double_v;
    long int *long_int_v;
@@ -146,6 +148,7 @@ union f77_value_ptr {
    void (*matFunc_v) (void *,void *,int *,struct primme_params *);
    void *ptr_v;
    void (*globalSumDoubleFunc_v) (void *,void *,int *,struct primme_params *);
+   void (*diagonalize_v) (void *,void *,int *,struct primme_params *);
    primme_target target_v;
    double double_v;
    long int long_int_v;

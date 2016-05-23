@@ -159,6 +159,8 @@ typedef struct primme_params {
    void *commInfo;
    void (*globalSumDouble)
       (void *sendBuf, void *recvBuf, int *count, struct primme_params *primme );
+   void (*diagonalize)
+      ( void *x,  void *y, int *basisSize, struct primme_params *primme);
 
    /*Though primme_initialize will assign defaults, most users will set these */
    int numEvals;          

@@ -247,6 +247,9 @@ void primme_set_member_f77(primme_params **primme, int *label, union f77_value v
       case PRIMMEF77_globalSumDouble:
               (*primme)->globalSumDouble = v.globalSumDoubleFunc_v;
       break;
+      case PRIMMEF77_diagonalize:
+              (*primme)->diagonalize = v.diagonalize_v;
+      break;
       case PRIMMEF77_numEvals:
               (*primme)->numEvals = *v.int_v;
       break;
@@ -442,6 +445,9 @@ void primme_get_member_f77(primme_params *primme, int *label, union f77_value_pt
       break;
       case PRIMMEF77_globalSumDouble:
               v->globalSumDoubleFunc_v = primme->globalSumDouble;
+      break;
+      case PRIMMEF77_diagonalize:
+              v->diagonalize_v = primme->diagonalize;
       break;
       case PRIMMEF77_numEvals:
               v->int_v = primme->numEvals;

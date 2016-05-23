@@ -1002,15 +1002,19 @@ static int insert_submatrix(double *H, double *hVals, double *hVecs,
    }
 
    /* ----------------------------------------- */
-   /* Solve the eigenproblrm for the submatrix. */
+   /* Solve the eigenproblem for the submatrix. */
    /* ----------------------------------------- */
-   Num_dsyev_dprimme("V", "U", numPrevRetained, subMatrix, numPrevRetained, 
-      &hVals[indexOfPreviousVecs], rwork, rworkSize, &info);
+   if (primme->diagonalize != NULL ) {
+      (*primme->diagonalize)(subMatrix, &hVals[indexOfPreviousVecs], &numPrevRetained, primme);
+   } else {
+      Num_dsyev_dprimme("V", "U", numPrevRetained, subMatrix, numPrevRetained, 
+         &hVals[indexOfPreviousVecs], rwork, rworkSize, &info);
 
-   if (info != 0) {
-      primme_PushErrorMessage(Primme_insert_submatrix, Primme_num_dsyev, info, 
-         __FILE__, __LINE__, primme);
-      return NUM_DSYEV_FAILURE;
+      if (info != 0) {
+         primme_PushErrorMessage(Primme_insert_submatrix, Primme_num_dsyev, info, 
+            __FILE__, __LINE__, primme);
+         return NUM_DSYEV_FAILURE;
+      }
    }
 
    /* ---------------------------------------------------------------------- */

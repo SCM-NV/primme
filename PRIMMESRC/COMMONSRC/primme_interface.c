@@ -67,6 +67,7 @@ void primme_initialize(primme_params *primme) {
    primme->nLocal                  = 0;
    primme->commInfo                = NULL;
    primme->globalSumDouble         = primme_seq_globalSumDouble;
+   primme->diagonalize             = NULL;
 
    /* Initial guesses/constraints */
    primme->initSize                = 0;

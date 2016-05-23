@@ -137,13 +137,17 @@ int solve_H_dprimme(double *H, double *hVecs, double *hVals,
       }
    }
 
-   Num_dsyev_dprimme("V", "U", basisSize, hVecs, basisSize, hVals, rwork, 
-                lrwork, &info);
+   if (primme->diagonalize != NULL) {
+      (*primme->diagonalize)(hVecs, hVals, &basisSize, primme);
+   } else {
+      Num_dsyev_dprimme("V", "U", basisSize, hVecs, basisSize, hVals, rwork, 
+             lrwork, &info);
 
-   if (info != 0) {
-      primme_PushErrorMessage(Primme_solve_h, Primme_num_dsyev, info, __FILE__, 
-         __LINE__, primme);
-      return NUM_DSYEV_FAILURE;
+      if (info != 0) {
+         primme_PushErrorMessage(Primme_solve_h, Primme_num_dsyev, info, __FILE__, 
+            __LINE__, primme);
+         return NUM_DSYEV_FAILURE;
+      }
    }
 
 #endif
