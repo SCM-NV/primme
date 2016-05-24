@@ -1013,6 +1013,20 @@ static int insert_submatrix(double *H, double *hVals, double *hVecs,
       return NUM_DSYEV_FAILURE;
    }
 
+   if (primme->numProcs > 1) {
+      // We need to get the eigenvectors from procID=0 in order to make sure
+      // that their sign is consistent across processes.
+      if (primme->procID != 0) {
+         for (i = 0; i < numPrevRetained; i++) rwork[i] = 0.0;
+      }
+      for (j = 0; j < numPrevRetained; j++) {
+         if (primme->procID == 0) {
+            for (i = 0; i < numPrevRetained; i++) rwork[i] = subMatrix[numPrevRetained*j+i];
+         }
+         (*primme->globalSumDouble)(rwork, &subMatrix[numPrevRetained*j], &numPrevRetained, primme);
+      }
+   }
+
    /* ---------------------------------------------------------------------- */
    /* The eigenvectors of the submatrix are of dimension numPrevRetained  */
    /* and reside in the submatrix array after dsyev is called.  The       */

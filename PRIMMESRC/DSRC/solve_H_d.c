@@ -148,6 +148,20 @@ int solve_H_dprimme(double *H, double *hVecs, double *hVals,
 
 #endif
 
+   if (primme->numProcs > 1) {
+      // We need to get the eigenvectors from procID=0 in order to make sure
+      // that their sign is consistent across processes.
+      if (primme->procID != 0) {
+         for (i = 0; i < basisSize; i++) rwork[i] = 0.0;
+      }
+      for (j = 0; j < basisSize; j++) {
+         if (primme->procID == 0) {
+            for (i = 0; i < basisSize; i++) rwork[i] = hVecs[basisSize*j+i];
+         }
+         (*primme->globalSumDouble)(rwork, &hVecs[basisSize*j], &basisSize, primme);
+      }
+   }
+
    /* ----------------------------------------------------------------------- */
    /* Update the largest absolute Ritz value ever seen as an estimate of ||A||
     * ----------------------------------------------------------------------- */
